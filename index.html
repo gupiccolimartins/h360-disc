@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mapa de perfil H360: comportamento e valores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B2242;
+  --card:#113059;
+  --gold:#C9A24A;
+  --gold-soft:#E2C782;
+  --ink:#F3EFE4;
+  --muted:#A9B8D0;
+  --line:rgba(201,162,74,.30);
+  --most:#C9A24A;
+  --least:#6E8FC2;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --sans:'Figtree',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(900px 520px at 88% -12%,rgba(201,162,74,.17),transparent 62%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:22px 18px 72px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0 0 .5em;letter-spacing:.005em}
+h1{font-size:clamp(2rem,6.4vw,3rem)}
+h2{font-size:clamp(1.45rem,4.6vw,1.9rem)}
+h3{font-size:1.25rem}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--gold-soft);outline-offset:3px;border-radius:6px}
+[tabindex="-1"]:focus{outline:none}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.brand img{height:40px;width:auto;display:block}
+.mark{display:grid;place-items:center;width:40px;height:40px;border:1.5px solid var(--gold);border-radius:10px;font-family:var(--serif);font-weight:700;font-size:1.5rem;color:var(--gold)}
+.brand-name{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--gold-soft)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 22px;margin-bottom:20px}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+.btn{appearance:none;border:1.5px solid var(--gold);background:transparent;color:var(--gold-soft);font:600 1rem var(--sans);padding:13px 22px;min-height:48px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,color .15s}
+.btn:hover{background:rgba(201,162,74,.14)}
+.btn.primary{background:var(--gold);color:#0B2242}
+.btn.primary:hover{background:var(--gold-soft)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.actions.between{justify-content:space-between}
+
+/* intro */
+.hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;margin-bottom:26px}
+@media(min-width:680px){.hero{grid-template-columns:1.35fr 1fr}}
+.hero .lead{font-size:1.1rem;color:var(--muted);max-width:52ch}
+.parts{display:grid;gap:10px;margin:0 0 24px;padding:0;list-style:none}
+.parts li{display:flex;gap:14px;align-items:baseline;border-top:1px solid var(--line);padding-top:10px}
+.parts b{font-family:var(--serif);font-size:1.15rem;color:var(--gold-soft);min-width:4.6rem}
+form .field{margin-bottom:16px}
+label{display:block;font-weight:600;margin-bottom:6px}
+input[type=text],input[type=email]{width:100%;font:inherit;color:var(--ink);background:rgba(8,26,51,.55);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;min-height:48px}
+input::placeholder{color:#7F92B3}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;color:var(--muted)}
+.check input{width:22px;height:22px;margin-top:2px;accent-color:var(--gold);flex:none}
+.err{color:#FFB4A2;font-weight:600;margin-top:12px}
+
+/* progress */
+.prog{margin-bottom:18px}
+.prog-top{display:flex;justify-content:space-between;gap:12px;font-size:.92rem;color:var(--muted);margin-bottom:8px}
+.prog-bar{height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .3s}
+
+/* ranking */
+.q-hint{color:var(--muted);font-size:.95rem;margin-bottom:6px}
+.q-step{font-weight:600;color:var(--gold-soft);margin-bottom:16px;min-height:1.5em}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ropt{appearance:none;width:100%;display:flex;gap:14px;align-items:center;text-align:left;font:inherit;color:var(--ink);background:rgba(8,26,51,.5);border:1.5px solid var(--line);border-radius:14px;padding:12px 16px 12px 12px;min-height:60px;cursor:pointer;transition:border-color .15s,background .15s}
+.ropt:hover{border-color:var(--gold-soft)}
+.ropt .badge{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:2px dashed rgba(255,255,255,.35);font-family:var(--serif);font-weight:700;font-size:1.15rem;color:transparent}
+.ropt .opt-text{margin:0;flex:1;font-size:1.03rem}
+.ropt.is-ranked{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35)}
+.ropt.is-ranked .badge{border:2px solid rgba(255,255,255,.6);color:var(--ink);background:rgba(255,255,255,.1)}
+.ropt.is-top{border-color:var(--most);background:rgba(201,162,74,.15)}
+.ropt.is-top .badge{background:var(--most);border-color:var(--most);color:#0B2242}
+.ropt.is-bottom{border-color:var(--least);background:rgba(110,143,194,.16)}
+.ropt.is-bottom .badge{background:var(--least);border-color:var(--least);color:#08182F}
+
+/* result */
+.res-head{margin-bottom:22px}
+.res-head .muted{margin:0}
+.status{min-height:1.4em;margin-top:14px;font-size:.95rem}
+.status.ok{color:#9EE0B4}
+.status.bad{color:#FFC9B8}
+.wheel-box{display:grid;gap:20px;grid-template-columns:1fr;align-items:center;margin-bottom:8px}
+@media(min-width:680px){.wheel-box{grid-template-columns:300px 1fr}}
+.wheel{width:100%;max-width:320px;height:auto;margin:0 auto;display:block}
+.wheel .mk{transform:translate(var(--tx),var(--ty));animation:settle 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes settle{from{transform:translate(160px,160px)}to{transform:translate(var(--tx),var(--ty))}}
+.legend{display:grid;gap:10px;font-size:.95rem}
+.legend div{display:flex;gap:10px;align-items:center}
+.dot{width:16px;height:16px;border-radius:50%;flex:none}
+.dot.n{background:var(--gold);border:2px solid #0B2242}
+.dot.a{border:2.5px dashed #fff}
+.drow{padding:14px 0;border-top:1px solid var(--line)}
+.dlabel{display:flex;align-items:center;gap:10px;font-weight:600;margin-bottom:8px}
+.dchip{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;color:#0B2242;font-weight:700}
+.bar-line{display:grid;grid-template-columns:86px 1fr 34px;gap:10px;align-items:center;font-size:.9rem;margin:5px 0}
+.bar-line .bl{color:var(--muted)}
+.bar-line b{text-align:right}
+.track{position:relative;height:12px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.track::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(255,255,255,.35)}
+.track i{display:block;height:100%;border-radius:99px}
+.track i.hatch{background:repeating-linear-gradient(135deg,var(--k) 0 6px,transparent 6px 11px);outline:1.5px solid var(--k);outline-offset:-1.5px}
+.note{font-size:.9rem;color:var(--muted);margin-top:12px}
+.kv{display:grid;gap:16px;margin-top:8px}
+@media(min-width:680px){.kv.two{grid-template-columns:1fr 1fr}}
+.kv h3{font-size:1.05rem;color:var(--gold-soft);margin-bottom:.35em}
+.kv ul{margin:0;padding-left:1.1em}
+.kv li{margin-bottom:.3em}
+.lvl{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:0;list-style:none}
+.lvl li{border:1.5px solid var(--line);border-radius:99px;padding:3px 12px;font-size:.9rem}
+.vrow{display:grid;grid-template-columns:1.6rem 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);align-items:center}
+.vrow .rank{font-family:var(--serif);font-size:1.3rem;color:var(--gold-soft)}
+.vname{display:flex;justify-content:space-between;gap:10px;font-weight:600;margin-bottom:6px}
+.vtag{font-weight:500;color:var(--muted);font-size:.88rem}
+.vrow .track i{background:var(--least)}
+.vrow.top .track i{background:var(--gold)}
+details{border-top:1px solid var(--line);padding:12px 0}
+details summary{cursor:pointer;font-weight:600;list-style-position:inside}
+details p{margin:.7em 0 0}
+.cta{border-color:var(--gold);text-align:left}
+.disc{font-size:.88rem;color:var(--muted)}
+footer.foot{margin-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.88rem;color:var(--muted)}
+.linkbtn{appearance:none;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;padding:6px 0}
+.toast{background:rgba(201,162,74,.16);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.92rem;margin-bottom:16px}
+
+@media(prefers-reduced-motion:reduce){
+  .wheel .mk{animation:none}
+  .prog-bar i{transition:none}
+}
+
+@media print{
+  :root{--bg:#fff;--card:#fff;--ink:#101828;--muted:#4A5568;--line:#C9CED6;--gold:#8A6A1F;--gold-soft:#7A5C17;--most:#B58A2C;--least:#5B7BAE}
+  body::before{display:none}
+  body{font-size:12.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{max-width:none;padding:0}
+  .card{break-inside:avoid;background:#fff}
+  .no-print{display:none!important}
+  .track{background:#E6E9EF}
+  .track::after{background:#98A1AF}
+  .dchip{color:#101828}
+}
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px">Esta página precisa de JavaScript para funcionar.</p></noscript>
+<div class="wrap" id="root">
+  <div id="app"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ============ CONFIGURAÇÃO ============ */
+var CONFIG = {
+  // Chave do Web3Forms (https://web3forms.com). O destinatário dos resultados é o e-mail usado para gerar a chave.
+  ACCESS_KEY: '9bd750e8-f0d7-43a6-a7c6-49564b79fdf7',
+  // WhatsApp da Mentoria H360 (DDI + DDD + número, só dígitos)
+  WHATSAPP: '5519976034074',
+  // URL do logo oficial (deixe vazio para usar o monograma provisório)
+  LOGO_URL: '',
+  STORAGE_KEY: 'h360_mapa_perfil_v3'
+};
+
+/* ============ CONTEÚDO: DISC ============ */
+/* 14 blocos. Cada bloco: [D, I, S, C]. Todas as frases descrevem COMO A PESSOA AGE (nunca como ela acha que deveria agir). */
+var DK = ['D','I','S','C'];
+var DISC_SETS = [
+ ['Decido rápido e assumo o comando','Envolvo e entusiasmo as pessoas','Mantenho a calma e o ritmo constante','Confiro os detalhes antes de avançar'],
+ ['Enfrento os desafios de frente','Crio conexão com todo mundo','Ouço com paciência antes de opinar','Sigo processos e padrões de qualidade'],
+ ['Vou direto ao ponto, sem rodeios','Motivo os outros com o meu entusiasmo','Sou leal e constante nos meus compromissos','Analiso os dados antes de me posicionar'],
+ ['Cobro resultado de mim e dos outros','Falo com facilidade em qualquer grupo','Evito conflitos e preservo a harmonia','Planejo com cuidado para não errar'],
+ ['Assumo riscos para bater a meta','Sou espontâneo e criativo nas ideias','Prefiro mudanças graduais e seguras','Respeito regras claras e bem definidas'],
+ ['Tomo a frente quando falta direção','Sou otimista mesmo nos momentos difíceis','Apoio os colegas sem esperar nada em troca','Sou cuidadoso e reservado ao me expor'],
+ ['Não recuo diante de uma objeção','Convenço as pessoas pelo carisma e pela conversa','Tenho paciência com quem precisa de mais tempo','Só me posiciono quando tenho todos os dados'],
+ ['Competo para me destacar','Gosto de ser visto e reconhecido pelas pessoas','Sou o porto seguro de quem está por perto','Reviso meu trabalho mais de uma vez'],
+ ['Ajo logo diante de uma oportunidade','Conto histórias e uso o humor para encantar','Termino o que começo, no meu ritmo','Prefiro fatos a opiniões'],
+ ['Imponho o ritmo para chegar mais rápido','Gosto de trabalhar rodeado de gente','Mantenho uma rotina previsível','Mantenho tudo organizado e documentado'],
+ ['Lidero pela cobrança e pelo exemplo','Lidero pela inspiração e pelo carisma','Lidero pelo apoio e pela escuta','Lidero pela competência e pelo método'],
+ ['Diante de um conflito, defendo minha posição com firmeza','Diante de um conflito, resolvo conversando e amenizando','Diante de um conflito, cedo para preservar a relação','Diante de um conflito, me apoio em fatos e evidências'],
+ ['Busco autonomia e poder de decisão','Busco liberdade para me relacionar e criar','Busco segurança e uma equipe unida','Busco excelência técnica e qualidade'],
+ ['Sou firme e determinado','Sou simpático e comunicativo','Sou calmo e confiável','Sou criterioso e preciso']
+];
+
+/* ============ CONTEÚDO: VALORES (7 dimensões) ============ */
+var VK = ['est','eco','ind','pol','alt','reg','teo'];
+var VN = {
+ est:['Viver em ambientes bonitos e harmoniosos','Ter equilíbrio entre trabalho, descanso e prazer','Cuidar dos detalhes que encantam','Expressar minha criatividade','Viver experiências que me emocionam','Trabalhar em um ambiente agradável e inspirador','Buscar beleza e leveza no cotidiano','Ter liberdade para ser autêntico e original','Apreciar arte, design, música e natureza','Cuidar da forma como as coisas são apresentadas'],
+ eco:['Ver retorno concreto sobre o tempo e o dinheiro que invisto','Ser eficiente e não desperdiçar recursos','Construir patrimônio e segurança financeira','Priorizar o que é prático e traz resultado imediato','Medir as escolhas pelo custo-benefício','Fazer negócios vantajosos','Aproveitar bem cada oportunidade de ganho','Ter uma situação financeira sólida e confortável','Transformar esforço em ganhos mensuráveis','Investir energia só no que tem retorno prático'],
+ ind:['Ter autonomia para decidir os rumos da minha vida','Fazer as coisas do meu próprio jeito','Ser único e me diferenciar das outras pessoas','Ter liberdade para não depender de ninguém','Construir algo que tenha a minha marca pessoal','Ser dono da minha própria agenda','Preservar minha independência acima de tudo','Seguir meu próprio caminho, mesmo que ninguém siga','Ser reconhecido pela minha originalidade','Tomar minhas decisões sem precisar de aprovação'],
+ pol:['Liderar e ter influência sobre decisões importantes','Ocupar posições de comando e responsabilidade','Ser reconhecido como referência e ter status','Ter controle sobre o resultado do grupo','Vencer a concorrência e liderar o ranking','Conquistar poder para realizar minhas ideias','Mobilizar pessoas em torno de uma direção','Ser respeitado pela posição que conquistei','Ter voz ativa e autoridade sobre o que acontece à minha volta','Estar à frente na hora de decidir'],
+ alt:['Ajudar as pessoas a superarem dificuldades','Contribuir para uma causa maior do que eu','Ver o crescimento das pessoas que oriento','Dedicar tempo e energia a quem precisa','Fazer diferença na vida dos outros','Trabalhar em prol da comunidade','Priorizar o bem-estar das pessoas acima do lucro','Ser generoso e apoiar sem esperar nada em troca','Construir relações baseadas em cuidado e empatia','Compartilhar o que tenho para ajudar os outros a crescerem'],
+ reg:['Ter uma rotina organizada e previsível','Seguir regras e procedimentos bem definidos','Manter tudo em ordem e no seu devido lugar','Trabalhar com processos claros, passo a passo','Cumprir o que foi combinado, sem improvisos','Respeitar a hierarquia e os papéis de cada um','Planejar antes de agir e seguir o plano','Ter padrões estabelecidos que todos seguem','Preferir métodos comprovados a experimentos','Ter estrutura e disciplina no dia a dia'],
+ teo:['Aprender continuamente e entender a fundo como as coisas funcionam','Descobrir a verdade por trás dos fatos, mesmo que leve tempo','Estudar e me aprofundar nos assuntos que me intrigam','Tomar decisões com base em análise e evidências','Ter tempo para refletir e desenvolver meu raciocínio','Ler, investigar e compartilhar conhecimento','Questionar o que ouço até chegar à explicação correta','Dominar a teoria por trás da minha atividade','Resolver problemas complexos por curiosidade intelectual','Estar perto de pessoas que provocam meu pensamento']
+};
+
+/* ============ TEXTOS DO RELATÓRIO ============ */
+var DISC_INFO = {
+ D:{nome:'Dominância', tipo:'Dominante', cor:'#E27D60',
+  resumo:'Pessoas com D alto focam em resultado, velocidade e controle. Decidem rápido, gostam de desafios e assumem a frente quando percebem falta de direção.',
+  fortes:['Decisão rápida e iniciativa','Coragem para negociar e enfrentar objeções','Foco em metas e em resultado','Capacidade de tirar as coisas do papel'],
+  atencao:['Impaciência com processos e com pessoas mais lentas','Pode soar duro ou atropelar os outros','Escuta pouco quando está acelerado','Assume riscos sem checar os detalhes'],
+  comunicar:'Seja breve e objetivo. Comece pela conclusão, apresente opções e deixe a decisão com a pessoa.',
+  evitar:'Evite enrolar, demonstrar insegurança ou impor regras sem explicar o porquê.',
+  mercado:'Como corretor, tende a fechar rápido e a gostar de metas agressivas; o risco é pressionar o cliente ou pular etapas de qualificação e de pós-venda.',
+  compra:'Como comprador, decide rápido, pela intuição e pela visão geral do resultado. Quer objetividade, opções claras e a sensação de controlar a decisão. Desconfia de conversa pessoal demais e de detalhes longos.',
+  traco:'acrescenta velocidade, ambição e firmeza na ação'},
+ I:{nome:'Influência', tipo:'Influente', cor:'#F0C14B',
+  resumo:'Pessoas com I alto são comunicativas, entusiasmadas e sociáveis. Movem-se por relacionamento, reconhecimento e novidade, e persuadem pelo carisma.',
+  fortes:['Criam conexão e rapport com facilidade','Persuasão e energia positiva','Rede de contatos e geração de indicações','Criatividade e capacidade de inspirar'],
+  atencao:['Dispersão e dificuldade com rotina e burocracia','Promessas além do que pode entregar','Fala mais do que escuta','Follow-up irregular'],
+  comunicar:'Seja caloroso, abra espaço para conversar e mostre visão e possibilidades. Reconheça conquistas.',
+  evitar:'Evite ser frio, cortar a conversa ou se apoiar só em números e regras.',
+  mercado:'Como corretor, gera indicações e encanta em visitas e apresentações; o risco é falhar em documentação, follow-up e organização do funil.',
+  compra:'Como comprador, decide pela emoção e pela relação com o corretor. Gosta de conversar, de imaginar a vida no imóvel e de ser bem recebido. Pode decidir por impulso e precisa de acompanhamento nos detalhes.',
+  traco:'acrescenta carisma, energia social e poder de persuasão'},
+ S:{nome:'Estabilidade', tipo:'Estável', cor:'#6DB88E',
+  resumo:'Pessoas com S alto são calmas, pacientes e leais. Valorizam harmonia, previsibilidade e cooperação, ouvem bem e constroem relações duradouras.',
+  fortes:['Escuta atenta e paciência','Consistência e lealdade','Trabalho em equipe','Confiança conquistada ao longo do tempo'],
+  atencao:['Resistência a mudanças bruscas','Dificuldade de dizer não e de se posicionar em conflitos','Demora para decidir','Guarda incômodos em vez de falar'],
+  comunicar:'Vá com calma, dê tempo para decidir e explique o que muda e por quê. Mostre segurança.',
+  evitar:'Evite pressionar por decisões rápidas, mudar as regras sem explicar ou falar de forma agressiva.',
+  mercado:'Como corretor, fideliza e conquista confiança no pós-venda; o risco é evitar cobrar decisão e demorar a prospectar ou a negociar com firmeza.',
+  compra:'Como comprador, decide com segurança e sem pressa. Precisa confiar no corretor, quer previsibilidade e costuma ouvir pessoas próximas. O processo é mais longo e ganha com paciência e clareza.',
+  traco:'acrescenta paciência, escuta e consistência'},
+ C:{nome:'Conformidade', tipo:'Analítico', cor:'#6FA3DE',
+  resumo:'Pessoas com C alto são analíticas, precisas e criteriosas. Valorizam qualidade, regras e fatos, planejam antes de agir e buscam evitar erros.',
+  fortes:['Atenção a detalhes e rigor técnico','Análise e planejamento','Organização e qualidade','Segurança em documentação e processos'],
+  atencao:['Perfeccionismo e excesso de análise','Crítica excessiva a si e aos outros','Dificuldade de delegar e de improvisar','Pode parecer frio ao lidar com emoções'],
+  comunicar:'Traga dados, prazos e critérios claros, dê tempo para analisar e cumpra o combinado.',
+  evitar:'Evite promessas vagas, exageros e pressão por uma decisão antes de ele analisar.',
+  mercado:'Como corretor, é referência em documentação, avaliação e segurança jurídica; o risco é demorar para agir e transmitir pouca emoção na apresentação.',
+  compra:'Como comprador, compara muito, pede documentos e números e só decide quando os dados fecham. Valoriza precisão, transparência e respostas por escrito.',
+  traco:'acrescenta critério, método e atenção aos detalhes'}
+};
+
+var DISC_ADAPT = {
+ D:{mais:'Você tem mostrado mais assertividade e decidido mais rápido do que é natural para você. É um recurso valioso em negociações. Para sustentar sem se desgastar, defina critérios de decisão com antecedência e reserve momentos para recarregar.',
+    menos:'Você tem segurado sua assertividade e seu ritmo. Isso traz cautela, mas cuide para não abafar sua iniciativa: escolha onde vale a pena assumir a frente e decidir.',
+    max:['Use sua rapidez para agir primeiro nas oportunidades e nos contatos mais quentes.','Antes de fechar, faça uma pergunta a mais ao cliente. Isso reduz atritos sem tirar a sua velocidade.','Delegue ou use checklists para os detalhes e o pós-venda, que consomem energia sem dar retorno imediato.']},
+ I:{mais:'Você tem se exposto e se comunicado mais do que é natural para você. Isso amplia sua rede e sua presença. Para sustentar, alterne contatos intensos com momentos de silêncio e use uma agenda ou um CRM simples para não depender da energia social.',
+    menos:'Você tem estado mais reservado do que é natural para você. Vale garantir que seu entusiasmo e suas ideias continuem aparecendo nos momentos certos, como em visitas e apresentações.',
+    max:['Transforme seu carisma em rotina: agenda fixa de contatos, follow-up e pedido de indicação.','Registre tudo em um CRM simples para que o entusiasmo não dependa da memória.','Deixe roteiro de visita e documentação prontos antes, para brilhar onde você é mais forte, no relacionamento.']},
+ S:{mais:'Você tem sido mais paciente, constante e acolhedor do que é natural para você. Isso fideliza clientes. Para sustentar, combine prazos claros e não abra mão de dizer não quando for preciso.',
+    menos:'Você tem agido com mais pressa e aceitado mais mudanças do que é natural para você. Reserve tempo para escutar e consolidar rotinas, principalmente no pós-venda.',
+    max:['Use a confiança que você constrói para pedir indicações e recompras de forma natural.','Treine frases para pedir decisão e fazer contraproposta com firmeza e sem culpa.','Estabeleça metas pequenas e semanais de prospecção para sair da zona de conforto de forma gradual.']},
+ C:{mais:'Você tem sido mais criterioso e detalhista do que é natural para você. Isso reduz erros. Para sustentar, crie checklists e modelos que tirem o peso da memória e do esforço.',
+    menos:'Você tem sido mais flexível e menos detalhista do que é natural para você. Vale apoiar-se em checklists e em alguém de confiança para conferir documentos e números.',
+    max:['Use seu rigor como diferencial: apresente ao cliente análises de mercado e a checagem documental.','Defina um prazo limite para a análise e decida com cerca de 80% das informações.','Conte histórias além dos números e pratique a apresentação emocional do imóvel.']}
+};
+
+var VAL_INFO = {
+ est:{nome:'Estética', foco:'harmonia e experiência',
+  desc:'Move-se por equilíbrio, harmonia, forma e beleza, num sentido amplo: coerência, qualidade e boa experiência. Valoriza criatividade e ambientes agradáveis.',
+  trabalho:'Enxerga o imóvel como experiência: apresentação, ambiente e detalhes que encantam. Pode se incomodar com processos e lugares caóticos.',
+  baixo:'Foca mais no funcional do que no estético e pode negligenciar a apresentação.',
+  max:'Invista na apresentação, no ambiente e na experiência que você entrega. É o seu diferencial.'},
+ eco:{nome:'Econômica', foco:'resultado e retorno',
+  desc:'Move-se por retorno prático sobre o tempo, o dinheiro e a energia investidos. Valoriza eficiência, produtividade e uso inteligente dos recursos.',
+  trabalho:'Foca em conversão, comissão e produtividade. O cuidado é não tornar as relações apenas transacionais.',
+  baixo:'É menos movido por ganho material direto e precisa de um propósito além do dinheiro.',
+  max:'Conecte suas metas de resultado a um propósito maior e acompanhe poucos indicadores simples. Resultado sustentável nasce de bons relacionamentos.'},
+ ind:{nome:'Individualista', foco:'autonomia e originalidade',
+  desc:'Move-se pela necessidade de ser único, independente e fazer do seu próprio jeito. Valoriza liberdade e originalidade.',
+  trabalho:'Tende ao trabalho autônomo e a construir uma marca pessoal. Pode ter dificuldade com processos impostos ou com muita supervisão.',
+  baixo:'Sente-se bem em equipe e em papéis definidos e se preocupa menos em se diferenciar.',
+  max:'Estruture sua autonomia com metas e rotinas próprias, para que a liberdade vire resultado, e escolha bem com quem vale a pena colaborar.'},
+ pol:{nome:'Política', foco:'liderança e influência',
+  desc:'Move-se por influência, liderança e controle. Valoriza estar à frente, decidir e conquistar posição.',
+  trabalho:'Busca liderar equipes, rankings e decisões. O cuidado é não ocupar espaço demais e ouvir quem pensa diferente.',
+  baixo:'Preocupa-se menos com status e comando e se sente confortável em papéis de apoio.',
+  max:'Direcione sua vontade de liderar para metas claras e para o desenvolvimento das pessoas ao redor. Ouvir quem pensa diferente amplia sua influência.'},
+ alt:{nome:'Altruísta', foco:'ajudar e contribuir',
+  desc:'Move-se por ajudar as pessoas e contribuir com algo maior. Valoriza empatia, generosidade e o desenvolvimento dos outros.',
+  trabalho:'Conecta-se com o sonho do cliente e com o time. Pode ter dificuldade de cobrar, negociar comissão ou dizer não.',
+  baixo:'É mais orientado a metas do que a causas e pode parecer distante emocionalmente.',
+  max:'Use sua vocação de ajudar como proposta de valor, mas estabeleça limites e regras claras sobre prazos e remuneração.'},
+ reg:{nome:'Reguladora', foco:'ordem e estrutura',
+  desc:'Move-se por ordem, rotina e estrutura. Valoriza regras claras, processos, previsibilidade e cumprimento do combinado.',
+  trabalho:'Constrói resultado com método, checklist e disciplina. Pode resistir a mudanças rápidas e a improvisos.',
+  baixo:'É mais flexível e improvisa com facilidade, mas pode achar regras e rotinas engessadas.',
+  max:'Transforme sua disciplina em método replicável: checklists, rotinas e processos que aumentem sua produtividade e a confiança dos clientes.'},
+ teo:{nome:'Teórica', foco:'conhecimento e compreensão',
+  desc:'Move-se por conhecer, entender e descobrir a verdade. Valoriza estudo, análise e aprendizado contínuo.',
+  trabalho:'Estuda o mercado a fundo, domina dados e argumenta com lógica. O cuidado é não se prender à análise e demorar a agir.',
+  baixo:'Prefere praticidade à teoria e aprende fazendo, sem se prender a estudos longos.',
+  max:'Transforme conhecimento em autoridade (análises, relatórios, aulas), mas defina um prazo para passar da análise à ação.'}
+};
+
+/* Combinação dos dois valores mais altos (21 pares, na ordem de VK) */
+var VAL_COMBO = {
+ 'est|eco':'Busca resultado com elegância: acredita que harmonia, qualidade e boa apresentação geram o melhor retorno. Tende a investir em experiência e nos detalhes que valorizam o que entrega.',
+ 'est|ind':'Quer criar do seu próprio jeito. Precisa de liberdade para imprimir um estilo pessoal e único ao que faz.',
+ 'est|pol':'Gosta de liderar pela inspiração e pelo bom gosto, usando a influência para elevar o padrão de qualidade e de experiência ao redor.',
+ 'est|alt':'Quer levar harmonia e bem-estar às pessoas. Cuida do ambiente e da experiência do outro com sensibilidade.',
+ 'est|reg':'Valoriza a beleza, mas dentro de padrões e ordem: gosta de estética organizada, com regras claras de qualidade.',
+ 'est|teo':'Une sensibilidade e curiosidade: gosta de entender por que algo é bem feito e de estudar o que faz uma experiência funcionar.',
+ 'eco|ind':'Vê a si mesmo como o próprio ativo: investe na própria marca e mede o quanto cada escolha retorna para si.',
+ 'eco|pol':'Acredita que estar à frente das decisões garante melhores resultados. Tende a buscar posições de comando e metas de lucro.',
+ 'eco|alt':'Busca resultado que também faça bem às pessoas. Tende a defender negócios com propósito e a valorizar relações de longo prazo.',
+ 'eco|reg':'Confia em planejamento e processo: acredita que resultado consistente vem de método, regras claras e disciplina.',
+ 'eco|teo':'Enxerga o conhecimento como o melhor investimento: estuda para decidir melhor e transforma o que aprende em retorno.',
+ 'ind|pol':'Quer comandar para fazer do seu jeito. Tende ao empreendedorismo e à independência total nas decisões.',
+ 'ind|alt':'Gosta de ajudar, mas do seu próprio jeito e nos seus termos. Prefere causas que escolheu e que pode moldar.',
+ 'ind|reg':'Acredita que existe uma forma certa de fazer, e que a sua é a melhor. Segue regras, mas prefere as que ele mesmo define.',
+ 'ind|teo':'Busca se diferenciar pela profundidade: quanto mais domina um assunto raro, mais única se torna a sua contribuição.',
+ 'pol|alt':'Quer liderar pessoas em torno de uma causa. Usa influência e posição para mobilizar e apoiar os outros.',
+ 'pol|reg':'Lidera pela ordem: gosta de estruturar regras e processos e de garantir que o grupo siga o que foi combinado.',
+ 'pol|teo':'Vê o conhecimento como fonte de influência. Ganha espaço pelo preparo e pela capacidade de explicar e decidir com fundamento.',
+ 'alt|reg':'Quer ajudar de forma organizada: valoriza estrutura, regras e método para que o apoio às pessoas seja justo e sustentável.',
+ 'alt|teo':'Usa o conhecimento para ajudar: gosta de ensinar, orientar e ajudar os outros a aprenderem por conta própria.',
+ 'reg|teo':'Une método e estudo: gosta de entender as regras e os fundamentos antes de agir, e de trabalhar com sistemas bem definidos.'
+};
+
+var PARTS = {
+ 1:{titulo:'Como você age', tempo:'cerca de 8 minutos', qtd:14, n:4,
+    texto:['Pense no ambiente em que você atua hoje, em geral o seu trabalho.',
+           'Em cada bloco, ordene as 4 frases da que mais se parece com você até a que menos se parece com você. Pense no que você realmente faz no dia a dia.',
+           'Não existem respostas certas ou erradas.'],
+    pergunta:'Qual frase mais parece com você? E qual menos?',
+    mais:'a que mais parece com você', menos:'a que menos parece com você'},
+ 2:{titulo:'O que move você', tempo:'cerca de 8 minutos', qtd:10, n:7,
+    texto:['Em cada bloco, ordene as 7 frases da mais importante até a menos importante para você.',
+           'Pense no que realmente guia suas decisões na vida, e não no que seria a resposta mais bonita.'],
+    pergunta:'O que é mais importante para você?',
+    mais:'a mais importante', menos:'a menos importante'}
+};
+
+/* ============ MONTAGEM DO FLUXO ============ */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(arr,rnd){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+var FLOW = (function(){
+  var rnd = mulberry32(360);
+  var flow = [{type:'intro'}];
+  flow.push({type:'part', part:1});
+  DISC_SETS.forEach(function(arr,i){
+    var opts = arr.map(function(t,j){return {k:DK[j], t:t};});
+    flow.push({type:'block', part:1, id:'d'+i, opts:shuffle(opts,rnd)});
+  });
+  flow.push({type:'part', part:2});
+  var pool = {}; VK.forEach(function(k){pool[k]=shuffle(VN[k],rnd);});
+  for(var s=0;s<10;s++){
+    var opts = VK.map(function(k){return {k:k, t:pool[k][s]};});
+    flow.push({type:'block', part:2, id:'v'+s, opts:shuffle(opts,rnd)});
+  }
+  flow.push({type:'result'});
+  return flow;
+})();
+var BLOCKS = FLOW.filter(function(f){return f.type==='block';});
+
+/* ============ ESTADO ============ */
+function freshState(){return {step:0, profile:{name:'',email:'',group:'',consent:false}, answers:{}, sent:null, done:false, date:null};}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+    if(!raw) return null;
+    var s = JSON.parse(raw);
+    if(!s || typeof s.step!=='number' || s.step<0 || s.step>=FLOW.length || !s.profile || !s.answers) return null;
+    return s;
+  }catch(e){return null;}
+}
+function saveState(){try{localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(S));}catch(e){}}
+function clearState(){try{localStorage.removeItem(CONFIG.STORAGE_KEY);}catch(e){}}
+
+var S = loadState();
+var resumed = !!(S && S.step>0 && !S.done);
+if(!S) S = freshState();
+
+/* ============ PONTUAÇÃO ============
+   DISC: cada bloco é ordenado de "mais" a "menos". As duas posições de cima formam a escala ADAPTADA
+   (1º = 2 pts, 2º = 1 pt) e as duas de baixo formam a escala NATURAL (4º = -2, 3º = -1; quem quase nunca
+   fica embaixo pontua alto). As duas escalas usam o mesmo fator e são centradas em 50, que é o resultado
+   esperado ao acaso, e ficam limitadas a 0-100.
+   Valores: cada bloco tem 1 frase por dimensão, ordenadas de 1º a 7º (7 a 1 ponto). */
+var DISC_CHANCE = 10.5, DISC_K = 50/17.5;
+function clamp100(x){return Math.max(0,Math.min(100,Math.round(x)));}
+function scoreDisc(ans){
+  var top={D:0,I:0,S:0,C:0}, pen={D:0,I:0,S:0,C:0};
+  BLOCKS.forEach(function(b){
+    if(b.part!==1) return;
+    var r = ans[b.id]; if(!r || r.length!==4) return;
+    top[r[0]]+=2; top[r[1]]+=1; pen[r[2]]+=1; pen[r[3]]+=2;
+  });
+  var nat={}, adp={};
+  DK.forEach(function(k){
+    var a=top[k], p=pen[k];
+    adp[k] = clamp100(50 + DISC_K*(a-DISC_CHANCE));
+    nat[k] = clamp100(50 + DISC_K*(DISC_CHANCE-p));
+  });
+  return {nat:nat, adp:adp};
+}
+function scoreVals(ans){
+  var raw={}; VK.forEach(function(k){raw[k]=0;});
+  BLOCKS.forEach(function(b){
+    if(b.part!==2) return;
+    var r = ans[b.id]; if(!r || r.length!==7) return;
+    r.forEach(function(k,i){raw[k]+=7-i;});
+  });
+  var val={}; VK.forEach(function(k){val[k]=Math.round((raw[k]-10)/60*100);});
+  return val;
+}
+function computeView(ans,name,date){
+  var d=scoreDisc(ans);
+  return {name:name, date:date, nat:d.nat, adp:d.adp, val:scoreVals(ans)};
+}
+function encodePayload(v){
+  var json = JSON.stringify({n:v.name, d:v.date, a:v.nat, b:v.adp, v:v.val});
+  return btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function decodePayload(str){
+  try{
+    var s = str.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='=';
+    var p = JSON.parse(decodeURIComponent(escape(atob(s))));
+    function ok(o,keys){return o && keys.every(function(k){return typeof o[k]==='number' && isFinite(o[k]) && o[k]>=0 && o[k]<=100;});}
+    if(!ok(p.a,DK) || !ok(p.b,DK) || !ok(p.v,VK)) return null;
+    return {name:String(p.n||'Participante').slice(0,80), date:String(p.d||'').slice(0,10), nat:p.a, adp:p.b, val:p.v};
+  }catch(e){return null;}
+}
+var VIEW = null;
+(function(){
+  var h = location.hash || '';
+  if(h.indexOf('#r=')===0) VIEW = decodePayload(h.slice(3));
+})();
+
+/* ============ UTILITÁRIOS ============ */
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fmtDate(iso){
+  if(!iso) return '';
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  return m ? m[3]+'/'+m[2]+'/'+m[1] : iso;
+}
+function todayISO(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function firstName(n){return String(n).trim().split(/\s+/)[0]||n;}
+function shareLink(v){return location.origin+location.pathname+'#r='+encodePayload(v);}
+function sortedDisc(nat){return DK.slice().sort(function(a,b){return nat[b]-nat[a] || DK.indexOf(a)-DK.indexOf(b);});}
+function sortedVals(val){return VK.slice().sort(function(a,b){return val[b]-val[a] || VK.indexOf(a)-VK.indexOf(b);});}
+function styleOf(nat){
+  var o = sortedDisc(nat), p=o[0], s=o[1];
+  var sec = nat[s]>=55 ? s : null;
+  return {primary:p, secondary:sec, code: sec ? p+'/'+sec : p, balanced: nat[p]<58};
+}
+function levelLabel(v){return v>=60?'alto':(v<=40?'baixo':'médio');}
+
+/* ============ TELAS ============ */
+function headerHTML(){
+  var mark = CONFIG.LOGO_URL
+    ? '<img src="'+esc(CONFIG.LOGO_URL)+'" alt="Mentoria H360">'
+    : '<span class="mark" aria-hidden="true">H</span><span class="brand-name">Mentoria H360</span>';
+  return '<header class="brand">'+mark+'</header>';
+}
+
+function wheelSVG(nat, adp){
+  var cx=160, cy=160, R=130;
+  function pos(p){
+    var x=((p.I+p.S)-(p.D+p.C))/200, y=((p.D+p.I)-(p.S+p.C))/200;
+    var px=x*1.9, py=y*1.9, len=Math.hypot(px,py);
+    if(len>0.9){px*=0.9/len; py*=0.9/len;}
+    return {x:cx+px*R, y:cy-py*R};
+  }
+  var quad = [['D',cx-R,cy-R,'#E27D60'],['I',cx,cy-R,'#F0C14B'],['S',cx,cy,'#6DB88E'],['C',cx-R,cy,'#6FA3DE']];
+  var s = '<svg class="wheel" viewBox="0 0 320 320" role="img" aria-label="Roda DISC com a posição do seu estilo natural e do estilo adaptado">';
+  s += '<defs><clipPath id="wclip"><circle cx="'+cx+'" cy="'+cy+'" r="'+R+'"/></clipPath></defs>';
+  s += '<g clip-path="url(#wclip)">';
+  quad.forEach(function(q){s+='<rect x="'+q[1]+'" y="'+q[2]+'" width="'+R+'" height="'+R+'" fill="'+q[3]+'" opacity=".26"/>';});
+  s += '</g>';
+  s += '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#C9A24A" stroke-width="1.5" opacity=".7"/>';
+  s += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(R/2)+'" fill="none" stroke="#fff" stroke-width="1" opacity=".18" stroke-dasharray="3 5"/>';
+  s += '<line x1="'+(cx-R)+'" y1="'+cy+'" x2="'+(cx+R)+'" y2="'+cy+'" stroke="#fff" opacity=".28"/>';
+  s += '<line x1="'+cx+'" y1="'+(cy-R)+'" x2="'+cx+'" y2="'+(cy+R)+'" stroke="#fff" opacity=".28"/>';
+  var lab = [['D',cx-R*0.55,cy-R*0.5],['I',cx+R*0.55,cy-R*0.5],['S',cx+R*0.55,cy+R*0.62],['C',cx-R*0.55,cy+R*0.62]];
+  lab.forEach(function(l){
+    s+='<text x="'+l[1]+'" y="'+l[2]+'" text-anchor="middle" font-family="Newsreader,Georgia,serif" font-size="44" font-weight="600" fill="#F3EFE4" opacity=".92">'+l[0]+'</text>';
+  });
+  if(nat && adp){
+    var pn=pos(nat), pa=pos(adp);
+    if(Math.hypot(pn.x-pa.x,pn.y-pa.y)>8){
+      s+='<line x1="'+pn.x.toFixed(1)+'" y1="'+pn.y.toFixed(1)+'" x2="'+pa.x.toFixed(1)+'" y2="'+pa.y.toFixed(1)+'" stroke="#fff" stroke-width="1.6" stroke-dasharray="4 4" opacity=".8"/>';
+    }
+    s+='<g class="mk" style="--tx:'+pa.x.toFixed(1)+'px;--ty:'+pa.y.toFixed(1)+'px"><circle r="10" fill="#0B2242" fill-opacity=".55" stroke="#fff" stroke-width="2.5" stroke-dasharray="4 3"/></g>';
+    s+='<g class="mk" style="--tx:'+pn.x.toFixed(1)+'px;--ty:'+pn.y.toFixed(1)+'px"><circle r="11" fill="#C9A24A" stroke="#0B2242" stroke-width="3"/></g>';
+  }
+  s+='</svg>';
+  return s;
+}
+
+function introHTML(){
+  var p = S.profile;
+  return ''+
+  '<section class="hero">'+
+    '<div>'+
+      '<h1 tabindex="-1" data-focus>Mapa de perfil: como você age e o que move suas decisões</h1>'+
+      '<p class="lead">Um diagnóstico de comportamento (DISC) e de valores pessoais, feito para você se conhecer melhor e para analisarmos os perfis juntos em aula.</p>'+
+    '</div>'+
+    '<div aria-hidden="true">'+wheelSVG()+'</div>'+
+  '</section>'+
+  '<ul class="parts">'+
+    '<li><b>Parte 1</b><span>Comportamento (DISC), com 14 blocos de 4 frases (cerca de 8 minutos)</span></li>'+
+    '<li><b>Parte 2</b><span>Valores, com 10 blocos de 7 frases (cerca de 8 minutos)</span></li>'+
+  '</ul>'+
+  '<section class="card">'+
+    '<h2>Antes de começar</h2>'+
+    '<p class="muted">Reserve uns 20 minutos sem interrupções. Suas respostas ficam salvas neste aparelho e neste navegador, então você pode parar e continuar depois.</p>'+
+    '<div class="field"><label for="f-name">Nome completo</label><input id="f-name" type="text" autocomplete="name" value="'+esc(p.name)+'" placeholder="Como aparece na turma"></div>'+
+    '<div class="field"><label for="f-email">E-mail</label><input id="f-email" type="email" autocomplete="email" inputmode="email" value="'+esc(p.email)+'" placeholder="voce@email.com"></div>'+
+    '<div class="field"><label for="f-group">Turma ou quem indicou você (opcional)</label><input id="f-group" type="text" value="'+esc(p.group)+'" placeholder="Ex.: turma de outubro, indicado pelo Carlos"></div>'+
+    '<label class="check" for="f-consent"><input id="f-consent" type="checkbox"'+(p.consent?' checked':'')+'><span>Autorizo o envio do meu resultado para a Mentoria H360, que poderá analisá-lo em aula com a turma. O envio é automático ao final do teste.</span></label>'+
+    '<div id="form-err" role="alert"></div>'+
+    '<div class="actions"><button class="btn primary" data-act="start">Começar o mapa</button></div>'+
+  '</section>';
+}
+
+function partHTML(f){
+  var P = PARTS[f.part];
+  return ''+
+  progressHTML(f)+
+  '<section class="card">'+
+    '<h2 tabindex="-1" data-focus>Parte '+f.part+' de 2: '+esc(P.titulo)+'</h2>'+
+    P.texto.map(function(t){return '<p>'+esc(t)+'</p>';}).join('')+
+    '<p class="muted small">'+P.qtd+' blocos, '+esc(P.tempo)+'. Responda com o primeiro instinto.</p>'+
+    '<div class="actions between"><button class="btn" data-act="back">Voltar</button><button class="btn primary" data-act="next">Continuar</button></div>'+
+  '</section>';
+}
+
+function progressHTML(f){
+  var done = 0, i;
+  for(i=0;i<S.step;i++) if(FLOW[i].type==='block') done++;
+  var total = BLOCKS.length, label, right;
+  if(f.type==='block'){
+    var inPart = BLOCKS.filter(function(b){return b.part===f.part;});
+    label = 'Parte '+f.part+': '+PARTS[f.part].titulo;
+    right = 'Bloco '+(inPart.indexOf(f)+1)+' de '+inPart.length;
+  } else {
+    label = 'Parte '+f.part+' de 2';
+    right = 'Faltam '+(total-done)+' blocos';
+  }
+  return '<div class="prog"><div class="prog-top"><span>'+esc(label)+'</span><span>'+esc(right)+'</span></div>'+
+    '<div class="prog-bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+done+'"><i style="width:'+(done/total*100).toFixed(1)+'%"></i></div></div>';
+}
+
+function blockHTML(f){
+  var r = S.answers[f.id] || [];
+  var P = PARTS[f.part], n = f.opts.length;
+  var lis = f.opts.map(function(o){
+    var pos = r.indexOf(o.k);
+    var cls = '';
+    if(pos>=0){ cls = ' is-ranked'; if(pos===0) cls=' is-ranked is-top'; else if(pos===n-1) cls=' is-ranked is-bottom'; }
+    return '<li><button class="ropt'+cls+'" data-act="rank" data-k="'+o.k+'" aria-pressed="'+(pos>=0)+'"'+(pos>=0?' aria-label="Posição '+(pos+1)+': '+esc(o.t)+'"':'')+'>'+
+      '<span class="badge" aria-hidden="true">'+(pos>=0?(pos+1):'')+'</span>'+
+      '<span class="opt-text">'+esc(o.t)+'</span></button></li>';
+  }).join('');
+  var step;
+  if(r.length>=n) step = 'Ordem completa. Toque em uma frase para tirar da posição, se quiser ajustar.';
+  else if(r.length===0) step = 'Toque primeiro na frase '+P.mais+'.';
+  else if(r.length===n-1) step = 'Falta só uma frase: toque nela para completar.';
+  else step = 'Agora toque na próxima frase (posição '+(r.length+1)+' de '+n+').';
+  var last = FLOW[S.step+1] && FLOW[S.step+1].type==='result';
+  return ''+
+  progressHTML(f)+
+  '<section class="card">'+
+    '<h2 tabindex="-1" data-focus>'+esc(P.pergunta)+'</h2>'+
+    '<p class="q-hint">Toque nas frases em ordem: primeiro '+P.mais+', por último '+P.menos+'.</p>'+
+    '<p class="q-step" aria-live="polite">'+step+'</p>'+
+    '<ul class="opts">'+lis+'</ul>'+
+    '<div class="actions between">'+
+      '<button class="btn" data-act="back">Voltar</button>'+
+      '<button class="btn" data-act="clear"'+(r.length?'':' disabled')+'>Limpar ordem</button>'+
+      '<button class="btn primary" data-act="next" id="btn-next"'+(r.length>=n?'':' disabled')+'>'+(last?'Ver meu resultado':'Próximo bloco')+'</button>'+
+    '</div>'+
+  '</section>';
+}
+
+/* ---------- Resultado ---------- */
+function discBarsHTML(nat, adp){
+  return DK.map(function(k){
+    var I = DISC_INFO[k];
+    return '<div class="drow">'+
+      '<div class="dlabel"><span class="dchip" style="background:'+I.cor+'">'+k+'</span><span>'+I.nome+'</span></div>'+
+      '<div class="bar-line"><span class="bl">Natural</span><div class="track"><i style="width:'+nat[k]+'%;background:'+I.cor+'"></i></div><b>'+nat[k]+'</b></div>'+
+      '<div class="bar-line"><span class="bl">Adaptado</span><div class="track"><i class="hatch" style="width:'+adp[k]+'%;--k:'+I.cor+'"></i></div><b>'+adp[k]+'</b></div>'+
+    '</div>';
+  }).join('');
+}
+
+function isInversion(nat, adp, k){return Math.abs(adp[k]-nat[k])>=15 && (nat[k]-50)*(adp[k]-50)<0;}
+function adaptHTML(nat, adp){
+  var flagged = DK.filter(function(k){return isInversion(nat,adp,k);});
+  var tn = sortedDisc(nat)[0], ta = sortedDisc(adp)[0];
+  var out = '<p>O estilo adaptado mostra <b>como você tem agido</b> no seu ambiente atual. Ele sai das frases que você colocou nas primeiras posições, enquanto o natural sai das que você colocou nas últimas.</p>';
+  if(!flagged.length && tn===ta){
+    out += '<p>Os dois gráficos são parecidos, e o estilo mais forte é o mesmo nos dois ('+DISC_INFO[tn].nome+'). Isso costuma indicar que o ambiente combina com o seu jeito natural e que a sua energia está bem aproveitada.</p>';
+  } else {
+    if(tn!==ta){
+      out += '<p>O estilo mais forte muda de um gráfico para o outro: no natural é '+DISC_INFO[tn].nome+' e no adaptado é '+DISC_INFO[ta].nome+'. Isso sugere que você tem usado mais esse segundo estilo no seu ambiente do que o seu jeito natural pediria.</p>';
+    }
+    if(flagged.length){
+      out += '<div class="kv"><div><h3>Pontos para conversar em aula</h3><ul>'+flagged.map(function(k){
+        var I = DISC_INFO[k], T = DISC_ADAPT[k], up = adp[k]>nat[k];
+        return '<li><b>'+I.nome+':</b> natural em '+nat[k]+' e adaptado em '+adp[k]+', em lados opostos do ponto médio. '+(up?T.mais:T.menos)+'</li>';
+      }).join('')+'</ul><p class="note">Quando natural e adaptado ficam de lados opostos do ponto médio, vale conversar sobre que situações pedem esse ajuste e como sustentá-lo. Não é um julgamento: é um convite para se conhecer melhor.</p></div></div>';
+    }
+  }
+  return out+'<p class="note">O adaptado não é melhor nem pior que o natural. Agir por muito tempo longe do jeito natural gasta mais energia, por isso vale perceber onde isso acontece.</p>';
+}
+
+function valuesHTML(val){
+  var order = sortedVals(val);
+  var rows = order.map(function(k,i){
+    var tag = i<2?'motivador principal':(i>=5?'menor prioridade':'intermediário');
+    return '<div class="vrow'+(i<2?' top':'')+'"><span class="rank">'+(i+1)+'</span><div>'+
+      '<div class="vname"><span>'+VAL_INFO[k].nome+' <span class="vtag">('+tag+')</span></span><b>'+val[k]+'</b></div>'+
+      '<div class="track"><i style="width:'+val[k]+'%"></i></div></div></div>';
+  }).join('');
+  var det = order.map(function(k,i){
+    var V = VAL_INFO[k];
+    var body = '<p>'+V.desc+'</p><p><b>No trabalho:</b> '+V.trabalho+'</p>'+(i>=5?'<p><b>Com esse valor mais baixo:</b> '+V.baixo+'</p>':'');
+    return '<details'+(i<2?' open':'')+'><summary>'+V.nome+': '+V.foco+'</summary>'+body+'</details>';
+  }).join('');
+  return rows+'<div style="margin-top:14px">'+det+'</div>';
+}
+
+function comboText(val){
+  var o = sortedVals(val).slice(0,2).sort(function(a,b){return VK.indexOf(a)-VK.indexOf(b);});
+  return VAL_COMBO[o[0]+'|'+o[1]] || '';
+}
+
+function maximizeHTML(v){
+  var st = styleOf(v.nat), P = DISC_INFO[st.primary], vo = sortedVals(v.val), V = VAL_INFO[vo[0]];
+  var tips = DISC_ADAPT[st.primary].max.map(function(t){return '<li>'+t+'</li>';}).join('');
+  return '<p class="muted">Sugestões práticas para colocar seu estilo natural e seu valor mais forte a favor dos seus resultados.</p>'+
+    '<div class="kv"><div><h3>Com o seu estilo '+esc(P.tipo.toLowerCase())+'</h3><ul>'+tips+'</ul></div>'+
+    '<div><h3>Com o seu valor mais forte ('+V.nome.toLowerCase()+')</h3><p>'+V.max+'</p></div></div>';
+}
+
+function statusHTML(){
+  var m = S.sent;
+  if(m==='sending') return '<p class="status" id="send-status" aria-live="polite">Enviando o resultado…</p>';
+  if(m==='ok') return '<p class="status ok" id="send-status" aria-live="polite">Resultado enviado para a Mentoria H360.</p>';
+  if(m==='error') return '<p class="status bad" id="send-status" aria-live="polite">Não foi possível enviar agora. Toque em “Enviar para a H360” para tentar de novo ou copie o link e mande pelo WhatsApp.</p>';
+  return '<p class="status" id="send-status" aria-live="polite"></p>';
+}
+
+function resultHTML(v, readonly){
+  var st = styleOf(v.nat), P = DISC_INFO[st.primary], Sx = st.secondary ? DISC_INFO[st.secondary] : null;
+  var vo = sortedVals(v.val), v1 = VAL_INFO[vo[0]], v2 = VAL_INFO[vo[1]];
+  var titulo = st.balanced ? 'Perfil equilibrado, com leve tendência a '+P.tipo.toLowerCase() : (Sx ? P.tipo+' com traços de '+Sx.tipo.toLowerCase() : P.tipo);
+  var lvl = DK.map(function(k){return '<li>'+DISC_INFO[k].nome+': '+v.nat[k]+' ('+levelLabel(v.nat[k])+')</li>';}).join('');
+  var combo = comboText(v.val);
+
+  var controls = '<div class="actions no-print">'+
+    '<button class="btn primary" data-act="print">Imprimir ou salvar em PDF</button>'+
+    '<button class="btn" data-act="copy" id="btn-copy">Copiar link do resultado</button>'+
+    (readonly?'':'<button class="btn" data-act="send">Enviar para a H360</button>')+
+  '</div>'+(readonly?'':statusHTML());
+
+  return ''+
+  '<section class="res-head">'+
+    '<h1 tabindex="-1" data-focus>Mapa de perfil de '+esc(firstName(v.name))+'</h1>'+
+    '<p class="muted">'+esc(v.name)+(v.date?', gerado em '+esc(fmtDate(v.date)):'')+(readonly?'. Você está vendo o resultado de outra pessoa.':'')+'</p>'+
+    controls+
+  '</section>'+
+
+  '<section class="card">'+
+    '<h2>Comportamento (DISC)</h2>'+
+    '<div class="wheel-box"><div>'+wheelSVG(v.nat, v.adp)+'</div>'+
+      '<div class="legend">'+
+        '<div><span class="dot n"></span><span>Natural: sua base espontânea, também o jeito como tende a reagir sob pressão</span></div>'+
+        '<div><span class="dot a"></span><span>Adaptado: como você tem agido no seu ambiente</span></div>'+
+        '<p class="note" style="margin:6px 0 0">Quanto mais perto de uma letra o ponto estiver, mais forte é aquele estilo. Perto do centro, o perfil é equilibrado.</p>'+
+      '</div></div>'+
+    discBarsHTML(v.nat, v.adp)+
+    '<p class="note">A linha branca em cada barra marca 50, o ponto médio. Acima de 60 o estilo é alto; abaixo de 40, baixo.</p>'+
+  '</section>'+
+
+  '<section class="card">'+
+    '<h2>Seu estilo natural: '+esc(titulo)+'</h2>'+
+    '<ul class="lvl">'+lvl+'</ul>'+
+    '<p>'+P.resumo+'</p>'+
+    (Sx?'<p>O segundo estilo mais forte é '+Sx.nome+' ('+st.secondary+'), que '+Sx.traco+'.</p>':'')+
+    (st.balanced?'<p>Como nenhum estilo se destaca muito, você provavelmente transita entre eles conforme o contexto.</p>':'')+
+    '<div class="kv two">'+
+      '<div><h3>Pontos fortes</h3><ul>'+P.fortes.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>'+
+      '<div><h3>Pontos de atenção</h3><ul>'+P.atencao.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>'+
+    '</div>'+
+    '<div class="kv">'+
+      '<div><h3>Como se comunicar com esse perfil</h3><p>'+P.comunicar+' '+P.evitar+'</p></div>'+
+      '<div><h3>No mercado imobiliário</h3><p>'+P.mercado+'</p><p>'+P.compra+'</p></div>'+
+    '</div>'+
+  '</section>'+
+
+  '<section class="card">'+
+    '<h2>Estilo adaptado: como você tem agido no seu ambiente</h2>'+
+    adaptHTML(v.nat, v.adp)+
+  '</section>'+
+
+  '<section class="card">'+
+    '<h2>Valores: o que move você</h2>'+
+    '<p class="muted">Os sete valores mostram por que você age como age. Cada um é lido de forma independente e o que importa é a ordem: os dois primeiros são os seus motivadores principais, os dois últimos pesam menos.</p>'+
+    valuesHTML(v.val)+
+  '</section>'+
+
+  '<section class="card">'+
+    '<h2>Como maximizar seus resultados</h2>'+
+    maximizeHTML(v)+
+  '</section>'+
+
+  '<section class="card">'+
+    '<h2>Leitura integrada</h2>'+
+    '<p>Seu estilo natural é '+esc(P.tipo.toLowerCase())+(Sx?' com traços de '+esc(Sx.tipo.toLowerCase()):'')+', e o que mais move suas decisões é '+esc(v1.foco)+', seguido de '+esc(v2.foco)+'. O estilo mostra como você age; os valores mostram por que você age assim.</p>'+
+    (combo?'<p><b>Seus dois valores mais altos juntos ('+esc(v1.nome.toLowerCase())+' e '+esc(v2.nome.toLowerCase())+'):</b> '+combo+'</p>':'')+
+    '<div class="kv"><div><h3>Perguntas para discutir em aula</h3><ul>'+
+      '<li>Em que situações do meu dia a dia o meu estilo natural ajuda? E em quais atrapalha?</li>'+
+      '<li>Como posso adaptar minha comunicação para clientes e parceiros com perfis diferentes do meu?</li>'+
+      '<li>O que os meus dois valores mais altos dizem sobre o tipo de carreira e de negócio que quero construir?</li>'+
+    '</ul></div></div>'+
+  '</section>'+
+
+  (readonly ? '<div class="actions no-print"><a class="btn" href="'+esc(location.pathname)+'">Fazer o meu mapa</a></div>' :
+  '<section class="card cta no-print"><h3>Quer conversar sobre o seu resultado?</h3><p class="muted">A Mentoria H360 pode ajudar você a transformar esse mapa em um plano de ação.</p>'+
+    '<a class="btn primary" href="https://wa.me/'+CONFIG.WHATSAPP+'?text='+encodeURIComponent('Olá! Fiz o Mapa de perfil H360 e quero conversar sobre o meu resultado.')+'" target="_blank" rel="noopener">Falar com a Mentoria H360 no WhatsApp</a></section>')+
+
+  '<p class="disc">Este mapa é uma ferramenta de autoconhecimento e de desenvolvimento, baseada no modelo DISC e nos valores de Spranger e Allport. Não é um teste psicológico validado e não deve ser usado sozinho para decisões de contratação ou de carreira.</p>';
+}
+
+function footerHTML(showRestart){
+  return '<footer class="foot no-print"><span>Mentoria H360</span>'+(showRestart?'<button class="linkbtn" data-act="restart">Apagar respostas e recomeçar</button>':'')+'</footer>';
+}
+
+/* ============ RENDER ============ */
+function currentView(){
+  return computeView(S.answers, S.profile.name, S.date || todayISO());
+}
+function render(scroll){
+  var app = document.getElementById('app');
+  var html = headerHTML();
+  var restartable = false;
+  if(VIEW){
+    html += resultHTML(VIEW, true);
+  } else {
+    var f = FLOW[S.step];
+    if(resumed && f.type!=='intro'){html += '<p class="toast" role="status">Continuamos de onde você parou.</p>'; resumed=false;}
+    if(f.type==='intro') html += introHTML();
+    else if(f.type==='part') html += partHTML(f);
+    else if(f.type==='block') html += blockHTML(f);
+    else html += resultHTML(currentView(), false);
+    restartable = f.type!=='intro';
+  }
+  app.innerHTML = html + footerHTML(restartable && !VIEW);
+  if(scroll!==false){
+    window.scrollTo(0,0);
+    var h = app.querySelector('[data-focus]'); if(h) h.focus({preventScroll:true});
+  }
+}
+
+/* ============ ENVIO (Web3Forms) ============ */
+function plainMessage(v){
+  var vo = sortedVals(v.val), st = styleOf(v.nat);
+  var L = [];
+  L.push('Resultado do Mapa de perfil H360');
+  L.push('Nome: '+v.name);
+  L.push('E-mail: '+S.profile.email);
+  if(S.profile.group) L.push('Turma / indicação: '+S.profile.group);
+  L.push('Data: '+fmtDate(v.date));
+  L.push('');
+  L.push('DISC natural: '+DK.map(function(k){return k+' '+v.nat[k];}).join(' | '));
+  L.push('DISC adaptado: '+DK.map(function(k){return k+' '+v.adp[k];}).join(' | '));
+  L.push('Estilo natural: '+st.code);
+  var inv = DK.filter(function(k){return isInversion(v.nat,v.adp,k);});
+  if(inv.length) L.push('Inversões (natural x adaptado): '+inv.join(', '));
+  L.push('');
+  L.push('Valores (ranking): '+vo.map(function(k,i){return (i+1)+'. '+VAL_INFO[k].nome+' ('+v.val[k]+')';}).join('  '));
+  L.push('');
+  L.push('Relatório completo: '+shareLink(v));
+  return L.join('\n');
+}
+function setStatus(){
+  var el = document.getElementById('send-status');
+  if(!el) return;
+  var tmp = document.createElement('div'); tmp.innerHTML = statusHTML();
+  el.className = tmp.firstChild.className; el.textContent = tmp.firstChild.textContent;
+}
+function sendResult(){
+  var v = currentView();
+  if(CONFIG.ACCESS_KEY.indexOf('SUA_')===0){
+    console.warn('Mapa de perfil H360: configure CONFIG.ACCESS_KEY (Web3Forms) para enviar os resultados por e-mail.');
+    S.sent='error'; saveState(); setStatus(); return;
+  }
+  S.sent='sending'; setStatus();
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      access_key:CONFIG.ACCESS_KEY,
+      subject:'Mapa de perfil H360: '+v.name,
+      from_name:'Mapa de perfil H360',
+      name:v.name,
+      email:S.profile.email,
+      replyto:S.profile.email,
+      message:plainMessage(v),
+      botcheck:''
+    })
+  }).then(function(r){return r.json();}).then(function(j){
+    S.sent = j && j.success ? 'ok' : 'error'; saveState(); setStatus();
+  }).catch(function(){S.sent='error'; saveState(); setStatus();});
+}
+
+/* ============ AÇÕES ============ */
+function isReady(f){var r=S.answers[f.id]; return !!(r && r.length===f.opts.length);}
+
+document.getElementById('app').addEventListener('click', function(e){
+  var b = e.target.closest('[data-act]'); if(!b || b.disabled) return;
+  var act = b.getAttribute('data-act');
+  var f = FLOW[S.step];
+
+  if(act==='start'){
+    var name = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var group = document.getElementById('f-group').value.trim();
+    var consent = document.getElementById('f-consent').checked;
+    var err = document.getElementById('form-err');
+    S.profile = {name:name, email:email, group:group, consent:consent};
+    if(name.length<2){err.innerHTML='<p class="err">Digite seu nome para começar.</p>'; document.getElementById('f-name').focus(); return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.innerHTML='<p class="err">Digite um e-mail válido para começar.</p>'; document.getElementById('f-email').focus(); return;}
+    if(!consent){err.innerHTML='<p class="err">Marque a autorização de envio do resultado para começar.</p>'; document.getElementById('f-consent').focus(); return;}
+    S.step=1; saveState(); render();
+  }
+  else if(act==='rank'){
+    var k = b.getAttribute('data-k'), n = f.opts.length;
+    var r = S.answers[f.id] = S.answers[f.id] || [];
+    var pos = r.indexOf(k);
+    if(pos>=0){ r.splice(pos,1); }
+    else {
+      r.push(k);
+      if(r.length===n-1){
+        var missing = f.opts.map(function(o){return o.k;}).filter(function(x){return r.indexOf(x)<0;});
+        if(missing.length===1) r.push(missing[0]);
+      }
+    }
+    saveState(); render(false);
+    var again = document.querySelector('.ropt[data-k="'+k+'"]'); if(again) again.focus({preventScroll:true});
+  }
+  else if(act==='clear'){
+    S.answers[f.id] = []; saveState(); render(false);
+  }
+  else if(act==='next'){
+    if(f.type==='block' && !isReady(f)) return;
+    S.step++;
+    if(FLOW[S.step].type==='result'){
+      S.done=true; S.date=S.date||todayISO(); saveState(); render();
+      if(S.sent!=='ok') sendResult();
+    } else {saveState(); render();}
+  }
+  else if(act==='back'){ if(S.step>0){S.step--; saveState(); render();} }
+  else if(act==='send'){ sendResult(); }
+  else if(act==='print'){ window.print(); }
+  else if(act==='copy'){
+    var link = VIEW ? location.href : shareLink(currentView());
+    var done = function(){b.textContent='Link copiado'; setTimeout(function(){b.textContent='Copiar link do resultado';},2200);};
+    if(navigator.clipboard && navigator.clipboard.writeText){navigator.clipboard.writeText(link).then(done, function(){window.prompt('Copie o link:', link);});}
+    else {window.prompt('Copie o link:', link);}
+  }
+  else if(act==='restart'){
+    if(window.confirm('Isso apaga todas as suas respostas neste aparelho. Deseja recomeçar?')){
+      var keep = S.profile; clearState(); S = freshState(); S.profile = keep; render();
+    }
+  }
+});
+
+window.addEventListener('beforeprint', function(){
+  Array.prototype.forEach.call(document.querySelectorAll('details'), function(d){d.open=true;});
+});
+
+render();
+})();
+</script>
+</body>
+</html>
